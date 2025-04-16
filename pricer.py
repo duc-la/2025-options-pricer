@@ -1,13 +1,17 @@
 from math import log, sqrt, exp
 from scipy.stats import norm
 
+import tkinter as tk
+from tkinter import messagebox
+
 #S is current price
 #K is strike price
 #T is time to maturity
 #sigma is volatility
 #r is risk free interest rate
-def black_scholes(S, K, T, sigma, r, option_type="call"):
+def black_scholes(S, K, T, r, sigma, option_type="call"):
     d1 = (
+        
         log(S / K) + 
         (r + 0.5 * sigma**2) * T 
         ) / ( sigma * sqrt(T) 
@@ -28,6 +32,6 @@ def black_scholes(S, K, T, sigma, r, option_type="call"):
 
 query = list(map(float, input().split()))
 
-print(query)
-print(black_scholes(query[0], query[1], query[2], query[3], query[4], "put"))
+#print(query)
+#print(black_scholes(query[0], query[1], query[2], query[3], query[4], "put"))
 #100 100 1 0.2 0.05
