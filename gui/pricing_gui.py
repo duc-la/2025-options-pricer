@@ -8,13 +8,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-#TODO: Heatmap
+#from gui.portfolio_gui import update_positions
 
+#TODO: Finalize documentation at the end
 def launch_gui(notebook):
-
-
+    #Function for displaying options prices
     def calculate():
-
         try:
             S = float(entry_S.get())
             K = float(entry_K.get())
@@ -57,6 +56,7 @@ def launch_gui(notebook):
         except Exception as e:
             messagebox.showerror("CSV Error", str(e))
 
+    #Function for heatmap
     def display_custom_heatmap(frame, option_type='call'):
         # Create grid of option prices
         vol1 = float( entry_min_vol.get() )
@@ -79,9 +79,8 @@ def launch_gui(notebook):
         call_prices = np.zeros((len(vol_range), len(spot_range)))
         put_prices = np.zeros((len(vol_range), len(spot_range)))
 
-        call_percent = np.zeros((len(vol_range), len(spot_range)))
-        put_percent = np.zeros((len(vol_range), len(spot_range)))
 
+        #Put prices into np array for later 
         for i, vol in enumerate(vol_range):
             for j, spot in enumerate(spot_range):
                 call_price = black_scholes(spot, K, T, r, vol)
@@ -92,7 +91,7 @@ def launch_gui(notebook):
 
 
             
-        # Create the heatmap
+        # Create the heatmap for calls
         if option_type == "call":
             base_call_price = black_scholes(S, K, T, r, sigma, option_type)
             call_annot = np.empty_like(call_prices, dtype=object)
@@ -109,6 +108,8 @@ def launch_gui(notebook):
             ax.set_title(f"{option_type.capitalize()} Price Heatmap")
             ax.set_xlabel("Spot Price")
             ax.set_ylabel("Volatility")
+        
+        #Create the heatmap for puts
         else:
             base_put_price = black_scholes(S, K, T, r, sigma, option_type)
             put_annot = np.empty_like(put_prices, dtype=object)
@@ -138,6 +139,17 @@ def launch_gui(notebook):
         # Close to prevent matplotlib from launching window
         plt.close(fig)
     
+    def get_current_option_data(option_type):
+        return {
+            "ticker" : entry_ticker.get(),
+            "option_type": option_type,
+            "S": float(entry_S.get()),
+            "K": float(entry_K.get()),
+            "T": float(entry_T.get()),
+            "r": float(entry_r.get()),
+            "sigma": float(entry_sigma.get())
+        }
+
     # GUI Setup
     pricer_tab = tk.Frame(notebook)
     notebook.add(pricer_tab, text="Options Pricer")
@@ -235,6 +247,7 @@ def launch_gui(notebook):
     entry_inc_vol.grid(row=6, column=1)
     entry_inc_vol.insert(0, "10")
 
+    #Heatmap activation stuff
     tk.Button(
     heatmap_frame,
     text="Call Heatmap",
@@ -251,17 +264,21 @@ def launch_gui(notebook):
     call_label = tk.Label(pos_frame, text="Call Price: -", font=("Helvetica", 12), anchor="w")
     call_label.grid(row=1, column=0, sticky='w', padx=5, pady=(10, 5))
 
-    tk.Button(pos_frame, text="Add/Update Call Position").grid(row=1, column=1, sticky='w', padx=10, pady=(10, 5))
+    # tk.Button(pos_frame, text="Update Call Positions in Portfolio Tab", 
+    #       command=lambda: update_positions(get_current_option_data("call")))\
+    #       .grid(row=1, column=1, pady=10)
+    #tk.Button(pos_frame, text="Add/Update Call Position").grid(row=1, column=1, sticky='w', padx=10, pady=(10, 5))
 
     put_label = tk.Label(pos_frame, text="Put Price: -", font=("Helvetica", 12), anchor="w")
     put_label.grid(row=2, column=0, sticky='w', padx=5, pady=(5, 10))
 
-    tk.Button(pos_frame, text="Add/Update Put Position").grid(row=2, column=1, sticky='w', padx=10, pady=(5, 10))
+    #tk.Button(pos_frame, text="Add/Update Put Position").grid(row=2, column=1, sticky='w', padx=10, pady=(5, 10))
+    # tk.Button(pos_frame, text="Update Put Positions in Portolio Tab", 
+    #       command=lambda: update_positions(get_current_option_data("put")))\
+    #       .grid(row=2, column=1, pady=10)
 
     pos_frame.columnconfigure(1, weight=1)
     calculate()
 
-    #Heatmap plot
-    tk.Label(heatmap_plot, text="(Heatmap goes here)").pack()
 
     return pricer_tab

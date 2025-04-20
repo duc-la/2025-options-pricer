@@ -1,4 +1,5 @@
 from gui.pricing_gui import launch_gui
+from gui.portfolio_gui import launch_portfolio_tab
 
 import tkinter as tk
 from tkinter import ttk
@@ -15,21 +16,21 @@ def main():
     launch_gui(notebook)
 
     # Create blank tabs
-    pricer_tab = ttk.Frame(notebook)
-    heatmap_tab = ttk.Frame(notebook)
+    #pricer_tab = ttk.Frame(notebook)
+    positions_tab = ttk.Frame(notebook)
+    notebook.add(positions_tab, text="Positions")
+
+    launch_portfolio_tab(positions_tab)
+
+
     chart_tab = ttk.Frame(notebook)
-
-    # Add tabs to notebook
-    notebook.add(heatmap_tab, text="Heatmap")
     notebook.add(chart_tab, text="Time Chart")
-   
-
-    # Add placeholder content (optional)
-    ttk.Label(pricer_tab, text="Pricer UI goes here").grid(pady=20)
-    #ttk.Label(heatmap_tab, text="Heatmap will be displayed here").pack(pady=20)
-    #ttk.Label(chart_tab, text="Chart will be displayed here").pack(pady=20)
 
     root.mainloop()
+
+    
+
+   
 
 
 if __name__ == "__main__":
