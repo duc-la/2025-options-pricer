@@ -89,9 +89,21 @@ def launch_gui(notebook):
     entry_r.grid(row=4, column=1)
 
 
-    tk.Label(heatmap_frame, text="Min Spot Price").grid(row=6, column=0, pady=(20, 0))
+    tk.Label(heatmap_frame, text="Min Spot Price").grid(row=1, column=0)
     entry_min_spot = tk.Entry(heatmap_frame)
-    entry_min_spot.grid(row=6, column=1, pady=(20, 0))
+    entry_min_spot.grid(row=1, column=1)
+
+    tk.Label(heatmap_frame, text="Max Spot Price").grid(row=2, column=0)
+    entry_max_spot = tk.Entry(heatmap_frame)
+    entry_max_spot.grid(row=2, column=1)
+
+    tk.Label(heatmap_frame, text="Min Volatility").grid(row=1, column=0)
+    entry_min_vol = tk.Entry(heatmap_frame)
+    entry_min_vol.grid(row=1, column=1)
+
+    tk.Label(heatmap_frame, text="Max Volatility").grid(row=2, column=0)
+    entry_max_vol = tk.Entry(heatmap_frame)
+    entry_max_vol.grid(row=2, column=1)
 
     tk.Button(param_frame, text="Calculate", command=calculate).grid(row=7, column=0, pady=10)
     tk.Button(param_frame, text="Upload CSV", command=upload_csv).grid(row=7, column=1)
