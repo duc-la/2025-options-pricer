@@ -25,9 +25,9 @@ def main():
    
 
     # Add placeholder content (optional)
-    ttk.Label(pricer_tab, text="Pricer UI goes here").pack(pady=20)
-    ttk.Label(heatmap_tab, text="Heatmap will be displayed here").pack(pady=20)
-    ttk.Label(chart_tab, text="Chart will be displayed here").pack(pady=20)
+    ttk.Label(pricer_tab, text="Pricer UI goes here").grid(pady=20)
+    #ttk.Label(heatmap_tab, text="Heatmap will be displayed here").pack(pady=20)
+    #ttk.Label(chart_tab, text="Chart will be displayed here").pack(pady=20)
 
     root.mainloop()
 
