@@ -3,6 +3,8 @@ from tkinter import filedialog, messagebox
 import csv
 from models.pricer import black_scholes
 
+#TODO: Heatmap
+
 def launch_gui(notebook):
     
 
@@ -72,30 +74,35 @@ def launch_gui(notebook):
 
 
     #Black Scholes Frame stuff    
-    tk.Label(param_frame, text="Stock Price (S):").grid(row=0, column=0)
+    tk.Label(param_frame, text="Current Ticker Symbol:").grid(row=0, column=0)
+    entry_ticker = tk.Entry(param_frame)
+    entry_ticker.grid(row=0, column=1)
+    entry_ticker.insert(0, "XYZ")
+
+    tk.Label(param_frame, text="Stock Price (S):").grid(row=1, column=0)
     entry_S = tk.Entry(param_frame)
-    entry_S.grid(row=0, column=1)
+    entry_S.grid(row=1, column=1)
     entry_S.insert(0, "100")
 
-    tk.Label(param_frame, text="Strike Price (K):").grid(row=1, column=0)
+    tk.Label(param_frame, text="Strike Price (K):").grid(row=2, column=0)
     entry_K = tk.Entry(param_frame)
-    entry_K.grid(row=1, column=1)
+    entry_K.grid(row=2, column=1)
     entry_K.insert(0, "100")
 
-    tk.Label(param_frame, text="Time to Maturity (T):").grid(row=2, column=0)
+    tk.Label(param_frame, text="Time to Maturity (T):").grid(row=3, column=0)
     entry_T = tk.Entry(param_frame)
-    entry_T.grid(row=2, column=1)
+    entry_T.grid(row=3, column=1)
     entry_T.insert(0, "1")
 
-    tk.Label(param_frame, text="Volatility (σ):").grid(row=3, column=0)
+    tk.Label(param_frame, text="Volatility (σ):").grid(row=4, column=0)
     entry_sigma = tk.Entry(param_frame)
-    entry_sigma.grid(row=3, column=1)
+    entry_sigma.grid(row=4, column=1)
     entry_sigma.insert(0, "0.2")
 
 
-    tk.Label(param_frame, text="Risk-Free Rate (r):").grid(row=4, column=0)
+    tk.Label(param_frame, text="Risk-Free Rate (r):").grid(row=5, column=0)
     entry_r = tk.Entry(param_frame)
-    entry_r.grid(row=4, column=1)
+    entry_r.grid(row=5, column=1)
     entry_r.insert(0, "0.05")
 
     tk.Button(param_frame, text="Calculate", command=calculate).grid(row=7, column=0, pady=10)
@@ -120,19 +127,17 @@ def launch_gui(notebook):
 
     #Position Frame stuff
     call_label = tk.Label(pos_frame, text="Call Price: -", font=("Helvetica", 12), anchor="w")
-    call_label.grid(row=0, column=0, sticky='w', padx=5, pady=(10, 5))
+    call_label.grid(row=1, column=0, sticky='w', padx=5, pady=(10, 5))
 
-    tk.Button(pos_frame, text="Add/Update Call Position").grid(row=0, column=1, sticky='w', padx=10, pady=(10, 5))
+    tk.Button(pos_frame, text="Add/Update Call Position").grid(row=1, column=1, sticky='w', padx=10, pady=(10, 5))
 
-    # Put Price
     put_label = tk.Label(pos_frame, text="Put Price: -", font=("Helvetica", 12), anchor="w")
-    put_label.grid(row=1, column=0, sticky='w', padx=5, pady=(5, 10))
+    put_label.grid(row=2, column=0, sticky='w', padx=5, pady=(5, 10))
 
-    tk.Button(pos_frame, text="Add/Update Put Position").grid(row=1, column=1, sticky='w', padx=10, pady=(5, 10))
+    tk.Button(pos_frame, text="Add/Update Put Position").grid(row=2, column=1, sticky='w', padx=10, pady=(5, 10))
+
+    pos_frame.columnconfigure(1, weight=1)
     calculate()
-
-
-
 
 
     return pricer_tab
