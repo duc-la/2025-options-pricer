@@ -6,7 +6,7 @@ from tkinter import ttk
 def main():
     root = tk.Tk()
     root.title("Options Toolkit")
-    root.geometry("1200x800")  # Optional: make it a bit wider
+    root.geometry("1500x1000")  # Optional: make it a bit wider
 
     # Create the tab control
     notebook = ttk.Notebook(root)  
