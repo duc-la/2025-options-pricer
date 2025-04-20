@@ -17,7 +17,10 @@ def launch_gui(notebook):
             call_price = black_scholes(S, K, T, r, sigma, "call")
             put_price = black_scholes(S, K, T, r, sigma, "put")
 
-            result_label.config(text=f"Call Price: {call_price:.2f}         Put Price: {put_price:.2f}")
+
+            call_label.config(text=f"Call Price: {call_price:.2f}")
+            put_label.config(text=f"Put Price: {put_price:.2f}")
+            #result_label.config(text=f"Call Price: {call_price:.2f}         Put Price: {put_price:.2f}")
         except Exception as e:
             messagebox.showerror("Input Error", str(e))
 
@@ -67,28 +70,38 @@ def launch_gui(notebook):
     pos_frame = tk.LabelFrame(wrapper, text="Call/Put Price", padx=30, pady=15)
     pos_frame.pack(side='left', anchor='n', padx=(40, 0))  
 
-    
+
+    #Black Scholes Frame stuff    
     tk.Label(param_frame, text="Stock Price (S):").grid(row=0, column=0)
     entry_S = tk.Entry(param_frame)
     entry_S.grid(row=0, column=1)
+    entry_S.insert(0, "100")
 
     tk.Label(param_frame, text="Strike Price (K):").grid(row=1, column=0)
     entry_K = tk.Entry(param_frame)
     entry_K.grid(row=1, column=1)
+    entry_K.insert(0, "100")
 
     tk.Label(param_frame, text="Time to Maturity (T):").grid(row=2, column=0)
     entry_T = tk.Entry(param_frame)
     entry_T.grid(row=2, column=1)
+    entry_T.insert(0, "1")
 
     tk.Label(param_frame, text="Volatility (σ):").grid(row=3, column=0)
     entry_sigma = tk.Entry(param_frame)
     entry_sigma.grid(row=3, column=1)
+    entry_sigma.insert(0, "0.2")
+
 
     tk.Label(param_frame, text="Risk-Free Rate (r):").grid(row=4, column=0)
     entry_r = tk.Entry(param_frame)
     entry_r.grid(row=4, column=1)
+    entry_r.insert(0, "0.05")
 
+    tk.Button(param_frame, text="Calculate", command=calculate).grid(row=7, column=0, pady=10)
+    tk.Button(param_frame, text="Upload CSV", command=upload_csv).grid(row=7, column=1)
 
+    #Heatmap frame stuff
     tk.Label(heatmap_frame, text="Min Spot Price").grid(row=1, column=0)
     entry_min_spot = tk.Entry(heatmap_frame)
     entry_min_spot.grid(row=1, column=1)
@@ -105,12 +118,21 @@ def launch_gui(notebook):
     entry_max_vol = tk.Entry(heatmap_frame)
     entry_max_vol.grid(row=2, column=1)
 
-    tk.Button(param_frame, text="Calculate", command=calculate).grid(row=7, column=0, pady=10)
-    tk.Button(param_frame, text="Upload CSV", command=upload_csv).grid(row=7, column=1)
+    #Position Frame stuff
+    call_label = tk.Label(pos_frame, text="Call Price: -", font=("Helvetica", 12), anchor="w")
+    call_label.grid(row=0, column=0, sticky='w', padx=5, pady=(10, 5))
 
-    
+    tk.Button(pos_frame, text="Add/Update Call Position").grid(row=0, column=1, sticky='w', padx=10, pady=(10, 5))
 
-    result_label = tk.Label(pos_frame, text="", font=("Helvetica", 12), justify="left")
-    result_label.grid(row=1, column=2, rowspan=100, sticky='nw', padx=(20, 0))
+    # Put Price
+    put_label = tk.Label(pos_frame, text="Put Price: -", font=("Helvetica", 12), anchor="w")
+    put_label.grid(row=1, column=0, sticky='w', padx=5, pady=(5, 10))
+
+    tk.Button(pos_frame, text="Add/Update Put Position").grid(row=1, column=1, sticky='w', padx=10, pady=(5, 10))
+    calculate()
+
+
+
+
 
     return pricer_tab
